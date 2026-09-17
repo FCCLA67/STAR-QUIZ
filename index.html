@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STAR PREP — Discovery Quiz</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#FBF8F5;
+    --surface:#FFFFFF;
+    --surface-2:#F4EFE9;
+    --text:#211D1D;
+    --text-soft:#6B6260;
+    --red:#C21E3A;
+    --red-deep:#8F1428;
+    --red-tint:#FBE7EA;
+    --line:#E9E1DA;
+    --green:#1E7A4C;
+    --green-tint:#E4F2E9;
+    --amber:#9A6B0C;
+    --amber-tint:#F7EDD9;
+    --gray:#8A8480;
+    --shadow: 0 10px 30px rgba(33,29,29,0.09);
+    --shadow-sm: 0 3px 10px rgba(33,29,29,0.07);
+    --radius-lg: 22px;
+    --radius-md: 14px;
+    --radius-sm: 9px;
+    --font-display:'Fraunces', Georgia, serif;
+    --font-body:'Work Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#18100E;
+      --surface:#241A18;
+      --surface-2:#2C201D;
+      --text:#F3EAE4;
+      --text-soft:#B8ACA6;
+      --red:#E14D63;
+      --red-deep:#C21E3A;
+      --red-tint:#3A1B22;
+      --line:#3A2C28;
+      --green:#4FBE86;
+      --green-tint:#1C2C22;
+      --amber:#E0AA4E;
+      --amber-tint:#33280F;
+      --gray:#948A85;
+      --shadow: 0 10px 30px rgba(0,0,0,0.45);
+      --shadow-sm: 0 3px 10px rgba(0,0,0,0.35);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#18100E;
+    --surface:#241A18;
+    --surface-2:#2C201D;
+    --text:#F3EAE4;
+    --text-soft:#B8ACA6;
+    --red:#E14D63;
+    --red-deep:#C21E3A;
+    --red-tint:#3A1B22;
+    --line:#3A2C28;
+    --green:#4FBE86;
+    --green-tint:#1C2C22;
+    --amber:#E0AA4E;
+    --amber-tint:#33280F;
+    --gray:#948A85;
+    --shadow: 0 10px 30px rgba(0,0,0,0.45);
+    --shadow-sm: 0 3px 10px rgba(0,0,0,0.35);
+  }
+
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:var(--font-body);
+    -webkit-font-smoothing:antialiased;
+    min-height:100vh;
+  }
+  .wrap{
+    max-width:760px;
+    margin:0 auto;
+    padding:0 20px 64px;
+  }
+  .skip-focus:focus-visible, button:focus-visible, [tabindex]:focus-visible, input:focus-visible{
+    outline:3px solid var(--red);
+    outline-offset:2px;
+  }
+
+  /* ---------- Top hero band ---------- */
+  .hero{
+    background:linear-gradient(165deg, var(--red) 0%, var(--red-deep) 100%);
+    color:#fff;
+    padding:34px 20px 46px;
+    border-radius:0 0 var(--radius-lg) var(--radius-lg);
+  }
+  .hero-inner{
+    max-width:760px;
+    margin:0 auto;
+  }
+  .brandrow{
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .star-mark{
+    width:34px;height:34px;flex:0 0 auto;
+  }
+  .brand-name{
+    font-family:var(--font-display);
+    font-weight:700;
+    font-size:1.35rem;
+    letter-spacing:0.2px;
+  }
+  .tagline{
+    margin-top:2px;
+    font-size:0.92rem;
+    color:rgba(255,255,255,0.86);
+  }
+
+  /* ---------- Progress ---------- */
+  .progress-shell{
+    margin-top:26px;
+  }
+  .progress-track{
+    height:7px;
+    background:rgba(255,255,255,0.28);
+    border-radius:20px;
+    overflow:hidden;
+  }
+  .progress-fill{
+    height:100%;
+    background:#fff;
+    border-radius:20px;
+    transition:width 0.4s cubic-bezier(.4,0,.2,1);
+  }
+  .progress-label{
+    margin-top:8px;
+    font-size:0.85rem;
+    color:rgba(255,255,255,0.85);
+    display:flex;
+    justify-content:space-between;
+  }
+
+  /* ---------- Cards / main content ---------- */
+  .card{
+    background:var(--surface);
+    border-radius:var(--radius-lg);
+    box-shadow:var(--shadow);
+    padding:34px 30px;
+    margin-top:-28px;
+    position:relative;
+  }
+  @media (max-width:560px){
+    .card{padding:26px 20px;}
+  }
+
+  .start-card h1{
+    font-family:var(--font-display);
+    font-size:1.7rem;
+    line-height:1.25;
+    margin:0 0 10px;
+  }
+  .start-card p{
+    color:var(--text-soft);
+    line-height:1.55;
+    margin:0 0 18px;
+    max-width:46ch;
+  }
+  .start-facts{
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:26px;
+  }
+  .fact-chip{
+    background:var(--surface-2);
+    border-radius:999px;
+    padding:7px 14px;
+    font-size:0.85rem;
+    color:var(--text);
+  }
+
+  .btn{
+    font-family:var(--font-body);
+    font-weight:600;
+    font-size:0.98rem;
+    border:none;
+    border-radius:12px;
+    padding:14px 26px;
+    cursor:pointer;
+    transition:transform .15s ease, box-shadow .15s ease, opacity .15s ease;
+  }
+  .btn:active{transform:translateY(1px);}
+  .btn-primary{
+    background:var(--red);
+    color:#fff;
+    box-shadow:0 6px 18px rgba(194,30,58,0.32);
+  }
+  .btn-primary:hover{box-shadow:0 8px 22px rgba(194,30,58,0.4);}
+  .btn-primary:disabled{
+    opacity:0.4;
+    cursor:not-allowed;
+    box-shadow:none;
+  }
+  .btn-ghost{
+    background:transparent;
+    color:var(--text);
+    border:1.5px solid var(--line);
+  }
+  .btn-ghost:hover{border-color:var(--red); color:var(--red);}
+  .btn-row{
+    display:flex;
+    gap:12px;
+    margin-top:28px;
+    flex-wrap:wrap;
+  }
+
+  /* ---------- Question ---------- */
+  .q-eyebrow{
+    font-size:0.82rem;
+    color:var(--red);
+    font-weight:600;
+    margin-bottom:8px;
+  }
+  .q-text{
+    font-family:var(--font-display);
+    font-size:1.4rem;
+    line-height:1.35;
+    margin:0 0 22px;
+  }
+  .option-list{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+    list-style:none;
+    margin:0;
+    padding:0;
+  }
+  .option{
+    display:block;
+  }
+  .option input{
+    position:absolute;
+    opacity:0;
+    width:0;height:0;
+  }
+  .option label{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    border:1.5px solid var(--line);
+    border-radius:var(--radius-md);
+    padding:14px 16px;
+    cursor:pointer;
+    transition:border-color .15s ease, background .15s ease;
+    line-height:1.4;
+    font-size:0.98rem;
+  }
+  .option label:hover{border-color:var(--red);}
+  .option input:checked + label{
+    border-color:var(--red);
+    background:var(--red-tint);
+  }
+  .option-dot{
+    width:18px;height:18px;flex:0 0 auto;
+    border-radius:50%;
+    border:2px solid var(--line);
+    position:relative;
+  }
+  .option input:checked + label .option-dot{border-color:var(--red);}
+  .option input:checked + label .option-dot::after{
+    content:"";
+    position:absolute;
+    inset:3px;
+    border-radius:50%;
+    background:var(--red);
+  }
+
+  /* ---------- Results ---------- */
+  .persona-tag{
+    display:inline-block;
+    background:rgba(255,255,255,0.18);
+    border:1px solid rgba(255,255,255,0.4);
+    border-radius:999px;
+    padding:5px 14px;
+    font-size:0.82rem;
+    margin-bottom:10px;
+  }
+  .persona-name{
+    font-family:var(--font-display);
+    font-size:1.9rem;
+    margin:0 0 8px;
+  }
+  .persona-desc{
+    color:rgba(255,255,255,0.9);
+    max-width:52ch;
+    line-height:1.5;
+    margin:0;
+  }
+  .section-label{
+    font-size:1.05rem;
+    font-weight:600;
+    margin:0 0 4px;
+  }
+  .section-sub{
+    color:var(--text-soft);
+    font-size:0.9rem;
+    margin:0 0 20px;
+  }
+  .event-card{
+    border:1.5px solid var(--line);
+    border-radius:var(--radius-md);
+    padding:20px;
+    margin-bottom:14px;
+  }
+  .event-top{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    gap:14px;
+  }
+  .event-rank{
+    font-family:var(--font-display);
+    font-size:0.85rem;
+    color:var(--red);
+    font-weight:600;
+    margin:0 0 4px;
+  }
+  .event-name{
+    font-family:var(--font-display);
+    font-size:1.18rem;
+    margin:0 0 6px;
+  }
+  .match-pct{
+    background:var(--green-tint);
+    color:var(--green);
+    font-weight:700;
+    font-size:0.95rem;
+    border-radius:999px;
+    padding:6px 13px;
+    white-space:nowrap;
+  }
+  .badge-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin:10px 0 12px;
+  }
+  .badge{
+    background:var(--surface-2);
+    border-radius:999px;
+    padding:5px 11px;
+    font-size:0.8rem;
+    color:var(--text);
+  }
+  .why-line{
+    font-size:0.92rem;
+    color:var(--text-soft);
+    line-height:1.5;
+    margin:0 0 10px;
+  }
+  .why-line .tip-tag{
+    color:var(--amber);
+    font-weight:600;
+  }
+  .detail-toggle{
+    background:none;
+    border:none;
+    color:var(--red);
+    font-weight:600;
+    font-size:0.88rem;
+    cursor:pointer;
+    padding:0;
+  }
+  .event-detail{
+    margin-top:14px;
+    padding-top:14px;
+    border-top:1px dashed var(--line);
+    font-size:0.9rem;
+    color:var(--text-soft);
+    line-height:1.55;
+  }
+  .official-line{
+    display:flex;
+    gap:8px;
+    margin-bottom:6px;
+    align-items:flex-start;
+  }
+  .official-tag{
+    color:var(--red);
+    font-weight:700;
+    font-size:0.78rem;
+    white-space:nowrap;
+    margin-top:1px;
+  }
+  .disclaimer{
+    font-size:0.82rem;
+    color:var(--text-soft);
+    background:var(--surface-2);
+    border-radius:var(--radius-sm);
+    padding:12px 16px;
+    margin-top:24px;
+    line-height:1.5;
+  }
+  .footnote{
+    text-align:center;
+    font-size:0.8rem;
+    color:var(--text-soft);
+    margin-top:26px;
+  }
+</style>
+</head>
+<body>
+
+<div id="app"></div>
+
+<script>
+/* ---------------------------------------------------------------
+   STAR PREP — Discovery Quiz
+   Personas: Creator (C), Speaker (S), Thinker (T), Helper (H),
+             Leader (L), Doer (D), Wild Card (W)
+--------------------------------------------------------------- */
+
+const personaMeta = {
+  C: { name:"Creator", desc:"You think in images, designs, and things people can actually see. You're happiest turning an idea into something real — a display, a design, a finished product." },
+  S: { name:"Speaker", desc:"You come alive with an audience. Explaining an idea out loud, making a case for something, and thinking on your feet come naturally to you." },
+  T: { name:"Thinker", desc:"You want to understand the \"why\" before you act. Research, planning, and getting the details right are where you do your best work." },
+  H: { name:"Helper", desc:"You notice what people need and step in. Community, service, and making things better for someone else are what drive you." },
+  L: { name:"Leader", desc:"You keep things organized and moving forward. Rallying a group, managing logistics, and hitting a deadline as a team feels natural to you." },
+  D: { name:"Doer", desc:"You'd rather be doing than talking about doing. Hands-on work, practical skill, and a finished result you can point to are what satisfy you." },
+  W: { name:"Wild Card", desc:"You don't fit neatly into one lane — and that's the point. You mix curiosity, independence, and creativity in a way that opens up more than one direction." }
+};
+
+const questions = [
+  { q:"Which of these sounds most exciting to work on?", cat:"Interests",
+    options:[
+      {t:"Designing something visual — a room, an outfit, a display", w:{C:3}},
+      {t:"Giving a talk that gets people fired up about an issue", w:{S:3}},
+      {t:"Digging into research until something finally clicks", w:{T:3}},
+      {t:"Helping someone else solve a real problem they're facing", w:{H:3,W:1}}
+    ]},
+  { q:"Your friends would probably say you're the one who...", cat:"Strengths",
+    options:[
+      {t:"Comes up with the creative idea first", w:{C:3}},
+      {t:"Can talk to absolutely anyone about anything", w:{S:3,L:1}},
+      {t:"Always has a plan and actually sticks to it", w:{D:2,L:2}},
+      {t:"Notices what people need before they even ask", w:{H:3}}
+    ]},
+  { q:"On a totally free Saturday, you'd rather...", cat:"Preferred activities",
+    options:[
+      {t:"Build or make something with your hands", w:{D:3,C:1}},
+      {t:"Read up on a topic you're genuinely curious about", w:{T:3}},
+      {t:"Organize an event or get a group moving on something", w:{L:3}},
+      {t:"Try a completely random new hobby", w:{W:3}}
+    ]},
+  { q:"Standing up and presenting in front of judges feels...", cat:"Presentation comfort",
+    options:[
+      {t:"Exciting — you like the spotlight", w:{S:3}},
+      {t:"Fine, as long as you know your material cold", w:{T:2,D:1}},
+      {t:"A little nerve-wracking, but you push through it", w:{H:1,C:1}},
+      {t:"Something you'd rather do standing next to a team", w:{L:1,H:1}}
+    ]},
+  { q:"When starting a new project, your instinct is to...", cat:"Research comfort",
+    options:[
+      {t:"Start sketching or prototyping right away", w:{C:3}},
+      {t:"Look up what's already been done first", w:{T:3}},
+      {t:"Ask the people around you what they think", w:{H:2,L:1}},
+      {t:"Just start and figure it out as you go", w:{W:2,D:1}}
+    ]},
+  { q:"In a group project, you naturally end up...", cat:"Teamwork",
+    options:[
+      {t:"Keeping everyone organized and on schedule", w:{L:3}},
+      {t:"Doing most of the hands-on work yourself", w:{D:3}},
+      {t:"Working off on your own — you focus best alone", w:{T:2,C:1}},
+      {t:"Making sure the quieter teammates get heard", w:{H:3}}
+    ]},
+  { q:"Which compliment would mean the most to you?", cat:"Creativity",
+    options:[
+      {t:"\"That was such a creative solution.\"", w:{C:3}},
+      {t:"\"You explained that so clearly.\"", w:{S:2,T:1}},
+      {t:"\"You really thought that through.\"", w:{T:3}},
+      {t:"\"You made that whole thing happen.\"", w:{D:2,L:1}}
+    ]},
+  { q:"You get the most done when...", cat:"Work style",
+    options:[
+      {t:"You have a clear checklist to follow", w:{D:3}},
+      {t:"You have freedom to figure it out your own way", w:{C:2,W:2}},
+      {t:"You're working toward a deadline with a team", w:{L:2,S:1}},
+      {t:"You're deep in research with zero interruptions", w:{T:3}}
+    ]},
+  { q:"Have you competed in FCCLA or something similar before?", cat:"Competition experience",
+    options:[
+      {t:"Yes — and honestly, you loved the pressure", w:{S:2,D:1}},
+      {t:"Yes, but you prefer the quieter, behind-the-scenes roles", w:{T:1,H:1}},
+      {t:"No, but you're ready to jump in headfirst", w:{W:2,L:1}},
+      {t:"No, and you'd rather start with something small", w:{H:1,C:1}}
+    ]},
+  { q:"Which final product sounds most satisfying to build?", cat:"Project preferences",
+    options:[
+      {t:"A physical display or design people can actually see", w:{C:3}},
+      {t:"A presentation that changes how people think", w:{S:3}},
+      {t:"A detailed plan or report backed by solid research", w:{T:3}},
+      {t:"A finished result you can point to and say \"I built that\"", w:{D:3}}
+    ]},
+  { q:"You'd feel most comfortable competing...", cat:"Preferred competition environment",
+    options:[
+      {t:"In a one-on-one, interview-style setting", w:{S:1,T:1}},
+      {t:"In a hands-on space with equipment and materials", w:{D:3}},
+      {t:"In front of a panel with visuals backing you up", w:{C:2,S:1}},
+      {t:"As part of a team running a live demonstration", w:{L:2,H:1}}
+    ]},
+  { q:"What motivates you most about STAR Events?", cat:"Motivation",
+    options:[
+      {t:"Building something you're genuinely proud to show off", w:{C:2,D:1}},
+      {t:"Getting better at speaking up for things that matter", w:{S:3}},
+      {t:"Learning something that could shape your future career", w:{T:2,L:1}},
+      {t:"Helping your chapter or community with something real", w:{H:3}}
+    ]},
+  { q:"Do you prefer clear step-by-step instructions, or open-ended freedom?", cat:"Structure preference",
+    options:[
+      {t:"Clear steps, please — tell me exactly what's expected", w:{D:3}},
+      {t:"A mix — some structure, but room to make it mine", w:{L:2,C:1}},
+      {t:"Open-ended — I like defining the problem myself", w:{T:2,W:2}},
+      {t:"I like when the \"steps\" involve people, not paperwork", w:{H:2,S:1}}
+    ]},
+  { q:"When you have to make a quick decision, you...", cat:"Decision-making",
+    options:[
+      {t:"Trust your gut and your creative instinct", w:{C:2,W:2}},
+      {t:"Think it through logically first", w:{T:3}},
+      {t:"Ask what's best for the group", w:{H:2,L:1}},
+      {t:"Just go with whatever gets it done fastest", w:{D:3}}
+    ]},
+  { q:"What kind of moment gives you the most energy?", cat:"What drives you",
+    options:[
+      {t:"The moment a project finally comes together", w:{C:2,D:1}},
+      {t:"The moment an audience reacts to what you're saying", w:{S:3}},
+      {t:"The \"aha\" moment when your research clicks", w:{T:3}},
+      {t:"The moment someone tells you that you actually helped them", w:{H:3}}
+    ]}
+];
+
+/* Verified 2026–2027 event data (from official materials supplied to STAR PREP).
+   Only events with confirmed official details are included here. */
+const events = [
+  { name:"AI for Impact",
+    team:"Individual or team (1–3)", levels:"Levels 1–3",
+    badges:["📋 Portfolio","🎤 Presentation","💻 Digital"],
+    official:["1–3 participants","Portfolio + oral presentation","Human-led, AI-supported work — AI must not replace human creativity, decision-making, or leadership"],
+    vector:{T:3,C:1,W:2},
+    lines:{T:"You like understanding how something works before you use it — this event is built around thoughtful, human-led use of AI, not just the tool itself.",
+           C:"There's real room here to shape a creative, well-designed final product, as long as the thinking behind it is clearly your own."} },
+  { name:"Baking and Pastry",
+    team:"Individual", levels:"Levels 1–2",
+    badges:["🍳 Hands-On"],
+    official:["Individual","Hands-on: quick bread, choux pastry, cookie, and cake decorating","Equipment and food preparation requirements apply"],
+    vector:{D:3,C:2},
+    lines:{D:"You like a checklist and a clear result — this event is about executing real techniques, start to finish, with your hands.",
+           C:"There's a genuine creative side here too, especially in decorating and presentation."} },
+  { name:"Career Investigation",
+    team:"Individual", levels:"Levels 1–4",
+    badges:["📋 Portfolio","🎤 Presentation"],
+    official:["Individual","Portfolio + oral presentation","Career exploration, self-assessment, research, and goals"],
+    vector:{T:3,H:1},
+    lines:{T:"This event rewards someone who genuinely enjoys researching and reflecting before presenting — that's your instinct already."} },
+  { name:"Entrepreneurship",
+    team:"Individual or team (1–3)", levels:"Levels 1–4",
+    badges:["📋 Portfolio","🎤 Presentation"],
+    official:["1–3 participants","Business plan + oral presentation","Business must relate to FCS education or related occupations"],
+    vector:{L:2,W:2,C:1},
+    lines:{L:"Building and pitching a real plan takes someone who can organize a lot of moving pieces — that's a strength of yours.",
+           W:"This event rewards independent thinkers who like charting their own direction, which fits how you approach things."} },
+  { name:"Event Management",
+    team:"Individual or team (1–3)", levels:"Levels 1–4",
+    badges:["📋 Portfolio","🎤 Presentation"],
+    official:["1–3 participants","Portfolio + oral presentation","Levels 2 and 3–4 include event volunteering experience"],
+    vector:{L:3,D:1},
+    lines:{L:"Coordinating logistics and pulling an event together plays right into your natural organizing instinct."} },
+  { name:"Interior Design",
+    team:"Individual or team (1–3)", levels:"Levels 1–4",
+    badges:["📋 Portfolio","🎤 Presentation","🎨 Creative Project"],
+    official:["1–3 participants","File folder, oral presentation, and visuals (optional 3-D model if space allows)","Generative AI may not create the specified floor plans, elevations, illustrations, renderings, layouts, or design concepts — work must be participant-created"],
+    vector:{C:3,T:1},
+    lines:{C:"Designing a space and presenting it visually is exactly the kind of hands-on creative work you gravitate toward."} },
+  { name:"Job Interview",
+    team:"Individual", levels:"Levels 1–4",
+    badges:["📋 Portfolio","🧑‍💼 Interview"],
+    official:["Individual","Portfolio + job application + interview","Strong communication and job knowledge required"],
+    vector:{S:2,D:1},
+    lines:{S:"A real interview rewards someone who communicates clearly under pressure — a trait you've shown throughout the quiz."} },
+  { name:"Leadership",
+    team:"Individual", levels:"Levels 1–4",
+    badges:["📋 Portfolio","🎤 Presentation"],
+    official:["Individual","Leadership book, leadership assessment, and development plan","Portfolio + oral presentation"],
+    vector:{L:3,S:1},
+    lines:{L:"This event is a direct match for someone who naturally steps into an organizing, rally-the-group role."} },
+  { name:"Parliamentary Procedure",
+    team:"Team (4–8)", levels:"Levels 1–4",
+    badges:["📝 Test","⚖️ Parliamentary Procedure","👥 Team"],
+    official:["Team of 4–8: president/chair, secretary, treasurer, and up to five chapter members","Knowledge test, demonstration meeting, minutes, and planning packet","Robert's Rules of Order, Newly Revised, 12th Edition","Calculators, computers, and prepared scripts are not allowed"],
+    vector:{L:2,D:2,T:1},
+    lines:{L:"Running a structured meeting as a team plays to your instinct for keeping a group organized and on track.",
+           D:"This event rewards someone who's comfortable with a clear procedure and a checklist to execute precisely."} },
+  { name:"Personal Finance: Presented by EVERFI",
+    team:"Individual", levels:"Levels 1–3",
+    badges:["📋 Portfolio","🎤 Presentation"],
+    official:["Individual","Portfolio + oral presentation","SMART financial goals, budgets, and spending tracking"],
+    vector:{T:3,D:1},
+    lines:{T:"Working through goals, budgets, and a plan step by step suits someone who likes to understand a problem fully before presenting it."} },
+  { name:"Professional Presentation",
+    team:"Individual or team (1–3)", levels:"Levels 1–4",
+    badges:["📋 Portfolio","🎤 Presentation"],
+    official:["1–3 participants","File folder, oral presentation, and visuals","Presentation about FCS and/or related occupations"],
+    vector:{S:3,C:1},
+    lines:{S:"An oral presentation built to persuade and inform is squarely in your comfort zone."} },
+  { name:"Public Policy Advocate",
+    team:"Individual or team (1–3)", levels:"Levels 1–4",
+    badges:["📋 Portfolio","🎤 Presentation"],
+    official:["1–3 participants","Portfolio + oral presentation","Identify an issue, research it, identify an audience or partners, and build an action plan"],
+    vector:{S:2,H:2,T:1},
+    lines:{H:"Advocating for a real issue that affects your community lines up with what motivates you most.",
+           S:"Making a persuasive case for change is a natural fit for how you communicate."} },
+  { name:"Repurpose and Redesign",
+    team:"Individual or team (1–3)", levels:"Levels 1–4",
+    badges:["📊 Display","🎤 Presentation","🎨 Creative Project"],
+    official:["1–3 participants","Display + oral presentation + skill selection chart","Must create a brand-new product — not just embellish an old one"],
+    vector:{C:3,W:1},
+    lines:{C:"Turning something old into something brand-new is a very direct match for your creative instincts."} },
+  { name:"Sports Nutrition",
+    team:"Individual or team (1–3)", levels:"Levels 1–4",
+    badges:["📋 Portfolio","🎤 Presentation"],
+    official:["1–3 participants","File folder, visuals, and oral presentation","Nutrition/hydration plan for a competitive student athlete"],
+    vector:{H:2,T:2,D:1},
+    lines:{T:"Building a research-backed plan for someone else's benefit plays to both your research instincts and your care for others.",
+           H:"This event is ultimately about helping an athlete perform better, which fits what drives you."} },
+  { name:"Sustainability Challenge",
+    team:"Individual or team (1–3)", levels:"Levels 1–4",
+    badges:["📋 Portfolio","🎤 Presentation"],
+    official:["1–3 participants","Research one annual topic and develop a sustainability project","Portfolio + oral presentation"],
+    vector:{H:2,T:2,W:1},
+    lines:{H:"A project built around real community or environmental impact fits what motivates you most.",
+           T:"There's a genuine research phase here that rewards someone who likes to dig in before acting."} },
+  { name:"Teach or Train",
+    team:"Individual", levels:"Levels 1–4",
+    badges:["📋 Portfolio","🎤 Presentation"],
+    official:["Individual","Portfolio + oral presentation","Complete lesson/workshop plan","Levels 2 and 3–4 include educator shadowing or best-practices experience"],
+    vector:{H:2,S:2,L:1},
+    lines:{H:"Teaching someone else something new is a direct extension of your instinct to help.",
+           S:"Presenting a lesson clearly and confidently is a strong match for how you communicate."} },
+  { name:"Teaching Strategies",
+    team:"Individual", levels:"Levels 1–3",
+    badges:["📋 Portfolio","🎤 Presentation","🎭 Role-Play"],
+    official:["Individual","Portfolio + resource container","Teaching strategy summary, lesson plan(s), project components, and oral presentation","Role-play where the participant acts as teacher and the evaluator acts as student"],
+    vector:{H:1,S:1,C:2,D:1},
+    lines:{C:"Designing a resource container and a lesson plan gives you real creative room inside a structured format.",
+           S:"The role-play portion rewards someone who's comfortable presenting and thinking on their feet."} }
+];
+
+/* ---------------------------------------------------------------
+   State + rendering
+--------------------------------------------------------------- */
+let step = -1; // -1 = start screen, 0..14 = questions, 15 = results
+let answers = new Array(questions.length).fill(null);
+let expandedEvent = null;
+
+const app = document.getElementById('app');
+
+function starMark(){
+  return `<svg class="star-mark" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M20 3 L24.5 15.5 L38 16.5 L27.5 24.8 L31 38 L20 30.2 L9 38 L12.5 24.8 L2 16.5 L15.5 15.5 Z" fill="#fff" opacity="0.95"/>
+  </svg>`;
+}
+
+function render(){
+  if(step === -1) return renderStart();
+  if(step >= 0 && step < questions.length) return renderQuestion();
+  return renderResults();
+}
+
+function renderStart(){
+  app.innerHTML = `
+    <div class="hero">
+      <div class="hero-inner">
+        <div class="brandrow">${starMark()}<span class="brand-name">STAR PREP</span></div>
+        <div class="tagline">Your guide to STAR Events.</div>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="card start-card">
+        <h1>Let's find the STAR Event that's right for you.</h1>
+        <p>Answer 15 quick questions about how you like to work, think, and compete. We'll match you with five STAR Events worth exploring — you're always free to research any event on your own too.</p>
+        <div class="start-facts">
+          <span class="fact-chip">15 questions</span>
+          <span class="fact-chip">About 4 minutes</span>
+          <span class="fact-chip">5 matches at the end</span>
+        </div>
+        <div class="btn-row">
+          <button class="btn btn-primary" id="startBtn">Find My Event →</button>
+        </div>
+      </div>
+      <p class="footnote">Your quiz matches are STAR PREP recommendations, not official FCCLA event assignments.</p>
+    </div>
+  `;
+  document.getElementById('startBtn').addEventListener('click', ()=>{ step = 0; render(); });
+}
+
+function renderQuestion(){
+  const total = questions.length;
+  const current = questions[step];
+  const pct = Math.round(((step) / total) * 100);
+  app.innerHTML = `
+    <div class="hero">
+      <div class="hero-inner">
+        <div class="brandrow">${starMark()}<span class="brand-name">STAR PREP</span></div>
+        <div class="progress-shell">
+          <div class="progress-track"><div class="progress-fill" style="width:${pct}%"></div></div>
+          <div class="progress-label">
+            <span>Question ${step+1} of ${total}</span>
+            <span>${current.cat}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="card">
+        <p class="q-eyebrow">Discovery Quiz</p>
+        <h2 class="q-text">${current.q}</h2>
+        <ul class="option-list">
+          ${current.options.map((opt,i)=>`
+            <li class="option">
+              <input type="radio" name="q${step}" id="q${step}o${i}" value="${i}" ${answers[step]===i?'checked':''}>
+              <label for="q${step}o${i}"><span class="option-dot"></span><span>${opt.t}</span></label>
+            </li>
+          `).join('')}
+        </ul>
+        <div class="btn-row">
+          ${step>0 ? `<button class="btn btn-ghost" id="backBtn">Back</button>` : ``}
+          <button class="btn btn-primary" id="nextBtn" ${answers[step]===null?'disabled':''}>
+            ${step===total-1 ? 'See My Matches →' : 'Next'}
+          </button>
+        </div>
+      </div>
+    </div>
+  `;
+  current.options.forEach((opt,i)=>{
+    document.getElementById(`q${step}o${i}`).addEventListener('change', ()=>{
+      answers[step] = i;
+      document.getElementById('nextBtn').removeAttribute('disabled');
+    });
+  });
+  if(step>0) document.getElementById('backBtn').addEventListener('click', ()=>{ step--; render(); });
+  document.getElementById('nextBtn').addEventListener('click', ()=>{
+    if(answers[step]===null) return;
+    step++;
+    render();
+  });
+}
+
+function computePersonaScores(){
+  const totals = {C:0,S:0,T:0,H:0,L:0,D:0,W:0};
+  questions.forEach((q,i)=>{
+    const chosen = answers[i];
+    if(chosen===null) return;
+    const w = q.options[chosen].w;
+    Object.keys(w).forEach(k=> totals[k]+=w[k]);
+  });
+  return totals;
+}
+
+function topPersonaKey(totals){
+  const order = ["C","S","T","H","L","D","W"];
+  let best = order[0];
+  order.forEach(k=>{ if(totals[k] > totals[best]) best = k; });
+  return best;
+}
+
+function dot(vecA, vecB){
+  let sum = 0;
+  Object.keys(vecB).forEach(k=>{ sum += (vecA[k]||0) * vecB[k]; });
+  return sum;
+}
+
+function computeMatches(totals){
+  const scored = events.map(e => ({...e, score: dot(totals, e.vector)}));
+  scored.sort((a,b)=> b.score - a.score);
+  const top5 = scored.slice(0,5);
+  const scores = top5.map(e=>e.score);
+  const max = Math.max(...scores), min = Math.min(...scores);
+  let pcts = top5.map(e=>{
+    if(max===min) return 88;
+    return 68 + Math.round(28 * (e.score - min) / (max - min));
+  });
+  for(let i=1;i<pcts.length;i++){
+    if(pcts[i] >= pcts[i-1]) pcts[i] = pcts[i-1] - Math.max(1, Math.round(Math.random()*2)+1);
+  }
+  pcts = pcts.map(p=> Math.max(60, Math.min(96,p)));
+  return top5.map((e,i)=> ({...e, pct: pcts[i]}));
+}
+
+function whyLine(event, topKey){
+  if(event.lines[topKey]) return {text:event.lines[topKey], persona:personaMeta[topKey].name};
+  // fall back to the persona this event weights most heavily
+  const keys = Object.keys(event.vector).sort((a,b)=> event.vector[b]-event.vector[a]);
+  const fallbackKey = keys[0];
+  if(event.lines[fallbackKey]) return {text:event.lines[fallbackKey], persona:personaMeta[fallbackKey].name};
+  return {text:"You scored well across several of the traits this event tends to reward.", persona:personaMeta[topKey].name};
+}
+
+function renderResults(){
+  const totals = computePersonaScores();
+  const topKey = topPersonaKey(totals);
+  const persona = personaMeta[topKey];
+  const matches = computeMatches(totals);
+
+  app.innerHTML = `
+    <div class="hero">
+      <div class="hero-inner">
+        <div class="brandrow">${starMark()}<span class="brand-name">STAR PREP</span></div>
+        <div style="margin-top:22px;">
+          <span class="persona-tag">Your STAR PREP type</span>
+          <h1 class="persona-name">${persona.name}</h1>
+          <p class="persona-desc">${persona.desc}</p>
+        </div>
+      </div>
+    </div>
+    <div class="wrap">
+      <div class="card">
+        <p class="section-label">We found your STAR Event matches!</p>
+        <p class="section-sub">Ranked by how well they fit your answers. 💡 Match percentages are STAR PREP recommendations, not official FCCLA scores — you're free to explore or choose any eligible event.</p>
+        <div id="eventList"></div>
+        <div class="btn-row">
+          <button class="btn btn-ghost" id="retakeBtn">Retake Quiz</button>
+        </div>
+        <div class="disclaimer">
+          Requirements marked 🔴 come from official FCCLA STAR Event materials. Everything marked 💡 is STAR PREP coaching — helpful context, not an official rule. For anything you need to verify, ask your Co-President or check the current FCCLA materials.
+        </div>
+      </div>
+    </div>
+  `;
+
+  const list = document.getElementById('eventList');
+  list.innerHTML = matches.map((e,i)=>{
+    const why = whyLine(e, topKey);
+    const isOpen = expandedEvent === e.name;
+    return `
+      <div class="event-card">
+        <div class="event-top">
+          <div>
+            <p class="event-rank">${['1st','2nd','3rd','4th','5th'][i]} match</p>
+            <h3 class="event-name">${e.name}</h3>
+          </div>
+          <span class="match-pct">${e.pct}%</span>
+        </div>
+        <div class="badge-row">
+          ${e.badges.map(b=>`<span class="badge">${b}</span>`).join('')}
+          <span class="badge">${e.team}</span>
+          <span class="badge">${e.levels}</span>
+        </div>
+        <p class="why-line"><span class="tip-tag">💡 Why it matches:</span> ${why.text}</p>
+        <button class="detail-toggle" data-event="${e.name}">${isOpen ? 'Hide official details −' : 'View official details +'}</button>
+        ${isOpen ? `
+          <div class="event-detail">
+            ${e.official.map(o=>`<div class="official-line"><span class="official-tag">🔴 OFFICIAL</span><span>${o}</span></div>`).join('')}
+          </div>
+        ` : ``}
+      </div>
+    `;
+  }).join('');
+
+  list.querySelectorAll('.detail-toggle').forEach(btn=>{
+    btn.addEventListener('click', ()=>{
+      const name = btn.getAttribute('data-event');
+      expandedEvent = expandedEvent === name ? null : name;
+      renderResults();
+    });
+  });
+
+  document.getElementById('retakeBtn').addEventListener('click', ()=>{
+    step = -1;
+    answers = new Array(questions.length).fill(null);
+    expandedEvent = null;
+    render();
+  });
+}
+
+render();
+</script>
+</body>
+</html>
